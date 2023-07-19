@@ -1,0 +1,82 @@
+day 1 7/15
+成功搭建 python 下的 krpc 环境，初步阅读 krpc 官方文档
+并使用 HTTrack Website Copier成功下载离线版文档
+在terminal程序下实现坎星第一次全自动亚轨道飞行 ：远点100km，开伞高度5km
+实验中初步开伞高度设定为1km发生坠毁，改为5km后勉强解决。以后应设置为10km以上！！！
+飞行日志如下：
+PS C:\Users\YY\code\code for krpc> & E:/Python/python.exe "c:/Users/YY/code/code for krpc/SubOrbitalFlight.py"
+Launch!
+Booster separation
+Gravity turn
+Launch stage separation
+Altitude = 4855.6 meters
+Altitude = 4630.0 meters
+Altitude = 4409.3 meters
+Altitude = 4188.2 meters
+Altitude = 3975.3 meters
+Altitude = 3761.7 meters
+Altitude = 3551.5 meters
+Altitude = 3344.5 meters
+Altitude = 3140.8 meters
+Altitude = 2940.1 meters
+Altitude = 2746.3 meters
+Altitude = 2551.3 meters
+Altitude = 2358.8 meters
+Altitude = 2169.2 meters
+Altitude = 1982.0 meters
+Altitude = 1800.7 meters
+Altitude = 1617.9 meters
+Altitude = 1437.6 meters
+Altitude = 1262.9 meters
+Altitude = 1086.7 meters
+Altitude = 915.8 meters
+Altitude = 743.7 meters
+Altitude = 576.7 meters
+Altitude = 408.5 meters
+Altitude = 246.7 meters
+Altitude = 103.6 meters
+Altitude = 12.4 meters
+Landed!
+
+day2 2023/7/16
+上午运行中发现问题，服务器链接不上显示'socketerror', 'AddressAlreadyInUse'
+推测为在 cmd 中运行时直接关闭 cmd，导致服务器接口仍被占用。
+解决方法为：重启一下。在以后运行时若想停止程序记得先在 cmd 窗口里 ctrl+c 结束运行释放服务器端口，然后在游戏中关闭服务器
+
+开始阅读文档里有关参考系的部分
+
+试图运行 launch_into_orbit.py 实现入轨 150 km 的轨道
+
+计算表达式时看不懂速度计算式，美曰 vis-viva 公式，实际就是能量守恒直接推出来的，，，
+根据 Kerbinwiki 补充有关比冲的知识，感觉蛮有用处
+
+第一次发射，点火后srb提前分离（飞行器尚未离开发射台），但由于一级燃料储备充足，依然成功入轨
+因为导入飞船时显示缺少零件，怀疑分离器有问题导致分离出现问题
+
+第二次发射，在 VAB 中调整了火箭结构，换上了常用的分离器和与原来一样的 srb，但发射仍然出现第一次中的 srb 提前分离的情况，推测故障原因在于代码。
+
+
+
+7/19更新
+项目缓慢进展中，之前出现的srb提前分离问题已经解决，由于某一行中的函数调用时多打了一个空格，，，
+
+学了点pid的基础知识，用 dr_can 的教程在simulate里面跑了个仿真，感觉效果不错
+
+基本完成基于 pid 的高度控制，高度迅速收敛，稳定性很棒，
+
+发生一次断网事件，后来发现是没关魔法就关了电脑，估计是服务器端口没释放？跟之前 krpc问题差不多应该
+
+实现高度控制以后试图把飞船开到大楼楼顶，但发现如果没有 SAS 飞船容易翻倒，所以很想学怎么 pid 控制飞船不侧翻，以及怎么控制飞船水平移动，并发现两个很赞的up，薛定谔的松鼠，mr_geforce，应该都是做控制算法出身的，认真学习中
+
+回过头去调用 plt 把高度 pid 的控制结果可视化了，这么看起来调的还是非常烂的，，，
+
+发现各种俯仰角的控制可以通过vessel.control来控制，同时水平方向的位移并不适合用rcs，可以通过控制主推近器的矢量移动来增江水平方向推力分量，值得研究
+
+
+
+
+
+
+
+
+
